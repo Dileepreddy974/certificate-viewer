@@ -1,4 +1,4 @@
-// Demo certificate checker function
+// Certificate checker function with real backend API
 async function checkCertificate() {
     const domainInput = document.getElementById('domainInput');
     const outputDiv = document.getElementById('demoOutput');
@@ -13,48 +13,37 @@ async function checkCertificate() {
     outputDiv.innerHTML = '<div style="display: flex; align-items: center; gap: 1rem; color: #64748b;"><div class="loading"></div><p>Checking certificate for ' + domain + '...</p></div>';
 
     try {
-        // Simulated certificate check (in real implementation, this would call your Java backend)
-        await simulateCertificateCheck(domain);
+        // Call the backend API
+        const response = await fetch('http://localhost:3000/api/check-certificate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ domain: domain })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Failed to retrieve certificate information');
+        }
+
+        if (data.success && data.output) {
+            outputDiv.innerHTML = '<pre>' + escapeHtml(data.output) + '</pre>';
+        } else {
+            outputDiv.innerHTML = '<p style="color: #ef4444;">No certificate information returned</p>';
+        }
     } catch (error) {
-        outputDiv.innerHTML = '<p style="color: #ef4444;">Error: ' + error.message + '</p>';
+        console.error('Error:', error);
+        outputDiv.innerHTML = '<p style="color: #ef4444;">Error: ' + escapeHtml(error.message) + '</p><p style="color: #64748b; font-size: 0.875rem; margin-top: 0.5rem;">Make sure the backend server is running on port 3000</p>';
     }
 }
 
-// Simulate certificate checking (replace with actual API call to your Java backend)
-function simulateCertificateCheck(domain) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const outputDiv = document.getElementById('demoOutput');
-            
-            // This is a demo simulation - in production, you'd call your Java backend
-            const mockResult = `Certificate Information for: ${domain}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Certificate Details:
-  Subject: CN=${domain}
-  Issuer: CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
-  Valid From: ${getFormattedDate(-180)}
-  Valid To: ${getFormattedDate(185)}
-  SHA-256 Fingerprint: 4A:5E:DB:4F:9E:2F:6E:11:22:33:44:55:66:77:88:99:AA:BB:CC:DD:EE:FF
-
-Subject Alternative Names (SANs):
-  - ${domain}
-  - www.${domain}
-
-Validation Results:
-  ✓ Certificate is valid
-  ✓ Hostname matches
-  ✓ Not expired
-  ✓ Certificate chain verified
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Note: This is a demo simulation. Download the tool to check real certificates!`;
-
-            outputDiv.innerHTML = '<pre>' + mockResult + '</pre>';
-            resolve();
-        }, 1500);
-    });
+// Helper function to escape HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 // Helper function to get formatted dates
