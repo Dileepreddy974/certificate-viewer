@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Viewer - SSL/TLS Certificate Analysis Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="icon">🔒</span>
+                <span class="brand-text">Certificate Viewer</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="#docs">Docs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>SSL/TLS Certificate Viewer</h1>
+                <p class="hero-subtitle">A powerful Java command-line tool for retrieving and validating SSL/TLS certificates from any HTTPS website</p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn btn-primary">Download Now</a>
+                    <a href="#demo" class="btn btn-secondary">Try Demo</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                    </div>
+                    <div class="terminal-body">
+                        <pre><code>$ java -jar CertificateViewer.jar github.com
+
+Certificate Information for: github.com
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Certificate Details:
+  Subject: CN=github.com
+  Issuer: CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+  Valid From: 2024-02-14
+  Valid To: 2025-03-14
+  Status: ✓ Valid
+
+Validation Results:
+  ✓ Certificate is valid
+  ✓ Hostname matches
+  ✓ Not expired</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Full Certificate Chain</h3>
+                    <p>Retrieves complete certificate chain from any HTTPS endpoint</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Detailed Information</h3>
+                    <p>Displays Subject, Issuer, CN, validity period, SHA-256 fingerprint, and SANs</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Certificate Validation</h3>
+                    <p>Performs expiration check and hostname verification with wildcard support</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Lightweight</h3>
+                    <p>Built with native Java APIs, no external dependencies required</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Multiple Modes</h3>
+                    <p>CLI mode for direct usage, interactive mode for prompt-based input</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Security Focused</h3>
+                    <p>Uses javax.net.ssl and java.security.cert for secure operations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="demo">
+        <div class="container">
+            <h2 class="section-title">Try It Out</h2>
+            <div class="demo-container">
+                <div class="demo-input-group">
+                    <input type="text" id="domainInput" placeholder="Enter domain (e.g., github.com)" class="demo-input">
+                    <button onclick="checkCertificate()" class="btn btn-primary">Check Certificate</button>
+                </div>
+                <div id="demoOutput" class="demo-output">
+                    <p class="demo-placeholder">Enter a domain name above to view its SSL certificate information</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="download">
+        <div class="container">
+            <h2 class="section-title">Get Started</h2>
+            <div class="download-content">
+                <div class="download-card">
+                    <h3>Download</h3>
+                    <p>Download the pre-built JAR file</p>
+                    <a href="CertificateViewer.jar" class="btn btn-primary" download>Download JAR</a>
+                </div>
+                <div class="download-card">
+                    <h3>Requirements</h3>
+                    <ul class="requirements-list">
+                        <li>Java 8 or higher</li>
+                        <li>Internet connectivity</li>
+                        <li>Command-line access</li>
+                    </ul>
+                </div>
+                <div class="download-card">
+                    <h3>Quick Start</h3>
+                    <div class="code-block">
+                        <code>java -jar CertificateViewer.jar &lt;domain&gt;</code>
+                    </div>
+                    <p class="code-example">Example: java -jar CertificateViewer.jar google.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="docs" class="documentation">
+        <div class="container">
+            <h2 class="section-title">Documentation</h2>
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <h3>📖 Usage Guide</h3>
+                    <p>Learn how to use Certificate Viewer with different modes and options</p>
+                    <a href="README.md" class="doc-link">View Guide →</a>
+                </div>
+                <div class="doc-card">
+                    <h3>🚀 Applications</h3>
+                    <p>Discover real-world use cases and applications</p>
+                    <a href="docs/Applications_and_Uses.md" class="doc-link">Explore Uses →</a>
+                </div>
+                <div class="doc-card">
+                    <h3>💻 Source Code</h3>
+                    <p>View and contribute to the source code on GitHub</p>
+                    <a href="#" class="doc-link">View on GitHub →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Certificate Viewer</h4>
+                    <p>A Java-based SSL/TLS certificate analysis tool</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#download">Download</a></li>
+                        <li><a href="#docs">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="README.md">README</a></li>
+                        <li><a href="docs/">Docs</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Certificate Viewer. Built with ❤️ using Java</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
