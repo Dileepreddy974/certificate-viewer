@@ -1,4 +1,4 @@
-// Certificate checker function with real backend API
+// Certificate checker function with backend API
 async function checkCertificate() {
     const domainInput = document.getElementById('domainInput');
     const outputDiv = document.getElementById('demoOutput');
@@ -13,13 +13,8 @@ async function checkCertificate() {
     outputDiv.innerHTML = '<div style="display: flex; align-items: center; gap: 1rem; color: #64748b;"><div class="loading"></div><p>Checking certificate for ' + domain + '...</p></div>';
 
     try {
-        // Determine API endpoint (works for both local and Vercel)
-        const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-            ? 'http://localhost:3000/api/check-certificate'
-            : '/api/check-certificate';
-
         // Call the backend API
-        const response = await fetch(apiUrl, {
+        const response = await fetch('http://localhost:3000/api/check-certificate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,11 +35,7 @@ async function checkCertificate() {
         }
     } catch (error) {
         console.error('Error:', error);
-        let errorMsg = '<p style="color: #ef4444;">Error: ' + escapeHtml(error.message) + '</p>';
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            errorMsg += '<p style="color: #64748b; font-size: 0.875rem; margin-top: 0.5rem;">Make sure the backend server is running on port 3000</p>';
-        }
-        outputDiv.innerHTML = errorMsg;
+        outputDiv.innerHTML = '<p style="color: #ef4444;">Error: ' + escapeHtml(error.message) + '</p><p style="color: #64748b; font-size: 0.875rem; margin-top: 0.5rem;">Make sure the backend server is running on port 3000</p>';
     }
 }
 
